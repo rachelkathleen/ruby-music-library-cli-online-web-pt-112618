@@ -3,6 +3,8 @@ class Genre
   attr_reader :songs
   @@all = []
 
+  extend Concerns::Findable
+
   def initialize(name)
     @name = name
     @songs = []
@@ -22,7 +24,7 @@ class Genre
 
   def self.create(name)
     self.new(name).save
-    self
+    @@all.last
   end
 
   def artists

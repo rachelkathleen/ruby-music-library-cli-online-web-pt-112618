@@ -1,3 +1,5 @@
+require 'pry'
+
 class Song
   attr_accessor :name
   attr_reader :artist, :genre
@@ -21,11 +23,6 @@ class Song
     @@all.clear
   end
 
-  def self.create(name)
-    self.new(name).save
-    self
-  end
-
   def artist=(artist)
     @artist = artist
     artist.add_song(self)
@@ -36,14 +33,22 @@ class Song
     genre.songs << self unless genre.songs.include?(self)
   end
 
+  def self.create(name)
+    self.new(name).save
+    @@all.last
+  end
+
   def self.find_by_name(name)
-    self.all.find {|song| song.name == name}
-    #self
+    self.all.detect {|song| song.name == name}
   end
 
   def self.find_or_create_by_name(name)
-    self.find_by_name(name) || self.create(name)
+    find_by_name(name) || create(name)
   end
 
-
+  def self.new_from_filename(filename)
+    artist, song = filename.split(" - ")
+    #binding.pry
+    new(artist, song)
+  end
 end
