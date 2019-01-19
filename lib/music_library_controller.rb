@@ -82,4 +82,5 @@ class MusicLibraryController
     puts "Please enter the name of a song:"
     list_songs
     input = gets.chomp
+  end
 end
